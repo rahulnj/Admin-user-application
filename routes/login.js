@@ -7,7 +7,7 @@ router.get('/', function (req, res, next) {
 });
 router.post('/loggedin', (req, res) => {
   console.log(req.body);
-  res.send('loggedin')
+  res.render('home')
 })
 
 
