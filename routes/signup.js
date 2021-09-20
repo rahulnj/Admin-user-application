@@ -4,14 +4,15 @@ const userhelpers = require('../helpers/newuser-helpers')
 
 /* GET signup page. */
 router.get('/', function (req, res, next) {
-  res.render('signup')
+  res.render('signup', { button: "Log In", action: "/" })
 });
 router.post('/submit', (req, res) => {
   userhelpers.dosignup(req.body).then((response) => {
     console.log(response);
   })
-  res.send('Recieved')
+  // res.send('Recieved')
 })
+
 
 
 

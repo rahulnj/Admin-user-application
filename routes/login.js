@@ -1,13 +1,23 @@
+const { response } = require('express');
 var express = require('express');
 var router = express.Router();
-var MongoClient = require('mongodb').MongoClient
+const userhelpers = require('../helpers/newuser-helpers')
 /* GET login page. */
 router.get('/', function (req, res, next) {
-  res.render('login',);
+  res.render('login', { button: "Sign Up", action: "/signup" });
 });
 router.post('/login', (req, res) => {
   // console.log(req.body);
-  res.redirect('/home')
+
+  userhelpers.doLogin(req.body).then((response) => {
+    if (response.status) {
+      res.redirect('/home')
+    } else {
+      res.redirect('/')
+    }
+  })
+
+
 })
 
 
