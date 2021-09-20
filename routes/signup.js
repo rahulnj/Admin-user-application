@@ -4,7 +4,10 @@ const userhelpers = require('../helpers/newuser-helpers')
 
 /* GET signup page. */
 router.get('/', function (req, res, next) {
-  res.render('signup', { button: "Log In", action: "/" })
+  if (req.session.loggedIn) {
+    res.redirect('home')
+  } else
+    res.render('signup', { button: "Log In", action: "/" })
 });
 router.post('/submit', (req, res) => {
   userhelpers.dosignup(req.body).then((response) => {

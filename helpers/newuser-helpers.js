@@ -26,12 +26,12 @@ module.exports = {
                         response.status = true
                         resolve(response)
                     } else {
-                        console.log("login failed");
+                        // console.log("login failed");
                         resolve({ status: false })
                     }
                 })
             } else {
-                console.log("login failed");
+                // console.log("login failed");
                 resolve({ status: false })
             }
         })
