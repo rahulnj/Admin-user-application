@@ -7,7 +7,7 @@
                     alt="Sample image">
             </div>
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                <form class="container-fluid" action="/login" method="POST">
+                <form class="container-fluid" action="/signup/submit" method="POST">
 
 
                     <!-- Username input -->
@@ -21,7 +21,7 @@
                     <!-- Email input -->
                     <div class="form-outline mb-4 shadow-sm">
                         <label class="form-label fs-7">E-Mail</label>
-                        <input type="password" name="password" id="form3Example4" class="form-control form-control-lg"
+                        <input type="email" name="mail" id="form3Example4" class="form-control form-control-lg"
                             placeholder="E-mail" />
                     </div>
                     <!-- Password input -->
@@ -33,8 +33,8 @@
                     </div>
                     <div class="form-outline mb-4 shadow-sm ">
                         <label class="form-label fs-7">CONFIRM PASSWORD</label>
-                        <input type="password" name="password" id="form3Example4" class="form-control form-control-lg"
-                            placeholder="confirm password" />
+                        <input type="password" name="confirm_password" id="form3Example4"
+                            class="form-control form-control-lg" placeholder="confirm password" />
                     </div>
 
                     {{!-- <div class="text-danger">{{error}}</div> --}}

@@ -5,5 +5,7 @@ var router = express.Router();
 router.get('/', function (req, res, next) {
   res.render('signup')
 });
-
+router.post('/submit', (req, res) => {
+  console.log(req.body);
+})
 module.exports = router;
