@@ -5,9 +5,9 @@ var MongoClient = require('mongodb').MongoClient
 router.get('/', function (req, res, next) {
   res.render('login',);
 });
-router.post('/loggedin', (req, res) => {
-  console.log(req.body);
-  res.render('home')
+router.post('/login', (req, res) => {
+  // console.log(req.body);
+  res.redirect('/home')
 })
 
 
