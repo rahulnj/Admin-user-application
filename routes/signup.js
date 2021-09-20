@@ -11,6 +11,7 @@ router.post('/submit', (req, res) => {
     console.log(response);
   })
   // res.send('Recieved')
+  res.redirect('/')
 })
 
 

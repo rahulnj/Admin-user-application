@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function (req, res, next) {
+
     let products = [
         {
             name: "Iphone",
@@ -52,7 +53,14 @@ router.get('/', function (req, res, next) {
             image: "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSsmjGT3h7CyjkFtQfh0VGIQI-p7Y-J9Vv6rWYE9xEO29q73akRM0siffapArb6Sl7LLKd9IhwDQ-FeoDJhiXGwgGEnafR07iVrxOnpB2b7UGCej0OBCQBW&usqp=CAE"
         }
     ]
-    res.render('home', { products });
+    let user = req.session.user
+    let block = true;
+    res.render('home', { products, user, block });
+    // console.log(user.username);
 });
+router.get('/logout', (req, res) => {
+    req.session.destroy()
+    res.redirect('/')
+})
 
 module.exports = router;

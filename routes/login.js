@@ -7,15 +7,19 @@ router.get('/', function (req, res, next) {
   res.render('login', { button: "Sign Up", action: "/signup" });
 });
 router.post('/login', (req, res) => {
-  // console.log(req.body);
-
-  userhelpers.doLogin(req.body).then((response) => {
-    if (response.status) {
-      res.redirect('/home')
-    } else {
-      res.redirect('/')
-    }
-  })
+  if (req.session.loggedIn) {
+    res.redirect('/home')
+  } else
+    // console.log(req.body); 
+    userhelpers.doLogin(req.body).then((response) => {
+      if (response.status) {
+        req.session.loggedIn = true
+        req.session.user = response.user
+        res.redirect('/home')
+      } else {
+        res.redirect('/')
+      }
+    })
 
 
 })

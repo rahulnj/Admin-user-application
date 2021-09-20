@@ -1,3 +1,29 @@
+<header>
+    <nav class='navbar navbar-light bg-light'>
+        <div class='container-fluid'>
+            <a class='navbar-brand' href=''>
+                <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Shopping_cart_icon.svg/1250px-Shopping_cart_icon.svg.png'
+                    alt='' width='30' height='24' class='d-inline-block align-text-top fw-3' />
+
+            </a>
+            <a class='navbar-brand' href=''>
+                Hi, {{user.username}}
+            </a>
+
+
+            <div class='d-grid gap-2 d-md-flex justify-content-md-end'>
+                {{#if user}}
+                <button class='btn btn-primary btn-primary btn-danger me-md-2' type='button'><a href='/home/logout'
+                        style="text-decoration: none; color:white">Log Out</a></button>
+                {{else}}
+                <button class='btn btn-primary btn-primary me-md-2' type='button'><a href='/'
+                        style="text-decoration: none; color:white">Sign in</a></button>
+                {{/if}}
+            </div>
+        </div>
+
+    </nav>
+</header>
 <section>
     <div class='container-fluid'>
         <div class='container'>
