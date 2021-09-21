@@ -11,6 +11,7 @@ router.get('/', function (req, res, next) {
     req.session.loginError = false;
   }
 });
+
 router.post('/login', (req, res) => {
   // console.log(req.body); 
   userhelpers.doLogin(req.body).then((response) => {
