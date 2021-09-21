@@ -44,6 +44,29 @@ module.exports = {
                 resolve({ status: false })
             }
         })
-    },
+    }, adminLogin: (adminData) => {
+        return new Promise(async (resolve, reject) => {
+            let loginstatus = false
+            let response = {}
+            let admin = await db.get().collection(collection.ADMIN_COLLECTION).findOne({ username: adminData.username })
+            if (admin) {
+                bcrypt.compare(adminData.password, admin.password).then((Status) => {
+                    if (Status) {
+                        console.log("login success");
+                        response.user = user
+                        response.status = true
+                        resolve(response)
+                    } else {
+                        console.log("login failed");
+                        resolve({ Status: false })
+                    }
+                })
+            } else {
+                console.log("login failed");
+                resolve({ Status: false })
+            }
+        })
+    }
+
 
 }

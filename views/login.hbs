@@ -31,19 +31,27 @@
                         <input type="password" name="password" id="form3Example4" class="form-control form-control-lg"
                             placeholder="Password" />
                     </div>
-                    {{!-- {{#if loginerr}}
-                    <div class="error text-danger">{{loginerr}}</div>
-                    {{/if}} --}}
-
-
 
                     <div class="text-center text-lg-start mt-4 pt-2">
                         <button type="submit" class="btn btn-primary btn-lg"
                             style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
 
                     </div>
-
                 </form>
+
+                {{!-- {{#if loginerr}}
+                <div class="error text-danger">{{loginerr}}</div>
+                {{/if}} --}}
+
+
+
+                {{!-- <div class="text-center text-lg-start mt-4 pt-2">
+                    <button type="submit" class="btn btn-primary btn-lg"
+                        style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
+
+                </div>
+
+                </form> --}}
                 {{!-- Admin Login End --}}
                 {{else}}
 
@@ -64,12 +72,6 @@
                         <input type="password" name="password" id="form3Example4" class="form-control form-control-lg"
                             placeholder="Enter your password" />
                     </div>
-                    {{#if loginerr}}
-                    <div class="error text-danger">{{loginerr}}</div>
-                    {{/if}}
-
-
-
                     <div class="text-center text-lg-start mt-4 pt-2">
                         <button type="submit" class="btn btn-primary btn-lg"
                             style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
@@ -77,6 +79,13 @@
                     </div>
 
                 </form>
+                {{#if loginerr}}
+                <div class="error text-danger">{{loginerr}}</div>
+                {{/if}}
+
+
+
+
                 {{/if}}
             </div>
         </div>

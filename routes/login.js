@@ -13,7 +13,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/login', (req, res) => {
-  // console.log(req.body); 
+  // console.log(req.body);
   userhelpers.doLogin(req.body).then((response) => {
     if (response.status) {
       req.session.loggedIn = true
