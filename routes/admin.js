@@ -9,6 +9,10 @@ router.post('/adminlogin', (req, res) => {
     res.render('admin/view-users',)
 })
 
+router.get('/adduser', (req, res) => {
+    res.render('admin/add-users')
+
+})
 
 
 module.exports = router;
