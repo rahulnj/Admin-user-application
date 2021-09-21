@@ -9,23 +9,25 @@
         </div>
     </div>
     <div class="container p-3">
-        <table class=" table table-striped table-hover table-borderless table-sm">
+        <table class=" table table-striped table-hover table-bordered table-sm">
             <thead>
                 <tr>
-                    <th scope="col">username</th>
-                    <th scope="col">mail</th>
-                    <th scope="col">password</th>
+
+                    <th scope="col">Username</th>
+                    <th scope="col">Mail</th>
+                    <th scope="col">Password</th>
                     <th scope="col">Handle</th>
                 </tr>
             </thead>
             <tbody>
-
+                {{#each newusers}}
                 <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
+                    <td>{{this.username}}</td>
+                    <td>{{this.mail}}</td>
+                    <td>{{this.password}}</td>
+                    <td></td>
                 </tr>
+                {{/each}}
 
             </tbody>
         </table>

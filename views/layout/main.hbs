@@ -21,6 +21,8 @@
 <body>
     {{#if block}}
     {{else}}
+    {{#if nonav}}
+    {{else}}
     <header>
         <nav class='navbar navbar-light bg-light'>
             <div class='container-fluid'>
@@ -43,6 +45,7 @@
 
         </nav>
     </header>
+    {{/if}}
     {{/if}}
     {{{body}}}
 

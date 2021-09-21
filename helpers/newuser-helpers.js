@@ -44,18 +44,19 @@ module.exports = {
                 resolve({ status: false })
             }
         })
-    }, adminLogin: (adminData) => {
+    },
+    adminLogin: (adminData) => {
         return new Promise(async (resolve, reject) => {
             let loginstatus = false
-            let responses = {}
+            let response = {}
             let admin = await db.get().collection(collection.ADMIN_COLLECTION).findOne({ username: adminData.username })
             if (admin) {
                 bcrypt.compare(adminData.password, admin.password).then((Status) => {
                     if (Status) {
                         console.log("login success");
-                        responses.admin = admin
-                        responses.status = true
-                        resolve(responses)
+                        response.admin = admin
+                        response.status = true
+                        resolve(response)
                     } else {
                         console.log("login failed");
                         resolve({ Status: false })
@@ -65,6 +66,12 @@ module.exports = {
                 console.log("login failed");
                 resolve({ Status: false })
             }
+        })
+    },
+    usersDetails: () => {
+        return new Promise(async (resolve, reject) => {
+            let newusers = await db.get().collection(collection.USER_COLLECTION).find().toArray()
+            resolve(newusers)
         })
     }
 

@@ -8,28 +8,27 @@ router.get('/', (req, res, next) => {
 })
 router.post('/adminlogin', (req, res) => {
     // console.log(req.body);
-    userhelpers.adminLogin(req.body).then((responses) => {
-        if (responses.status) {
-            // res.send('view users')
-            res.render('admin/view-users',)
-        } else {
-            res.redirect('/admin')
-        }
+    userhelpers.usersDetails().then((newusers) => {
+        userhelpers.adminLogin(req.body).then((response) => {
+            // console.log(newusers);
+            if (response.status) {
+                req.session.loggedin = true
+                req.session.admin = response.admin
+                res.render('admin/view-users', { button: "Log out", action: "/admin/signout", newusers })
+            } else {
 
+                res.redirect('/admin')
+            }
+
+        })
     })
+
 
 
 })
 
-
-
-
 router.get('/adduser', (req, res) => {
-
-
-    res.render('admin/add-users')
-
-
+    res.render('admin/add-users', { nonav: true })
 })
 router.post('/create', (req, res) => {
 
@@ -37,6 +36,10 @@ router.post('/create', (req, res) => {
         console.log(response);
     })
     res.redirect('/admin/adduser')
+})
+router.get('/signout', (req, res) => {
+    req.session.destroy()
+    res.redirect('/admin')
 })
 
 
