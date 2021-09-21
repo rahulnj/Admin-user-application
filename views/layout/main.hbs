@@ -11,7 +11,11 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="icon"
         href="https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Shopping_cart_icon.svg/1250px-Shopping_cart_icon.svg.png">
+    {{#if admin}}
+    <title>Admin Login</title>
+    {{else}}
     <title>E-cart</title>
+    {{/if}}
 </head>
 
 <body>
@@ -27,8 +31,12 @@
 
 
                 <div class='d-grid gap-2 d-md-flex justify-content-md-end'>
+                    {{#if admin}}
+
+                    {{else}}
                     <button class='btn btn-primary btn-primary me-md-2' type='button'><a href={{action}}
                             style="text-decoration: none; color:white">{{button}}</a></button>
+                    {{/if}}
 
                 </div>
             </div>

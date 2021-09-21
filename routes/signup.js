@@ -11,7 +11,7 @@ router.get('/', function (req, res, next) {
 });
 router.post('/submit', (req, res) => {
   userhelpers.dosignup(req.body).then((response) => {
-    console.log(response);
+    // console.log(response);
   })
   // res.send('Recieved')
   res.redirect('/')
