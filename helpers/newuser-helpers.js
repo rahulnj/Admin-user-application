@@ -13,6 +13,15 @@ module.exports = {
 
         })
     },
+    docreateUser: (userData) => {
+        return new Promise(async (resolve, reject) => {
+            userData.password = await bcrypt.hash(userData.password, 10)
+            db.get().collection(collection.ADMIN_COLLECTION).insertOne(userData).then((data) => {
+                resolve(data.ops[0])
+            })
+
+        })
+    },
     doLogin: (userData) => {
         return new Promise(async (resolve, reject) => {
             let loginStatus = false
@@ -21,7 +30,7 @@ module.exports = {
             if (user) {
                 bcrypt.compare(userData.password, user.password).then((status) => {
                     if (status) {
-                        console.log("login success");
+                        // console.log("login success");
                         response.user = user
                         response.status = true
                         resolve(response)
@@ -35,5 +44,5 @@ module.exports = {
                 resolve({ status: false })
             }
         })
-    }
+    },
 }
