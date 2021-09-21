@@ -7,10 +7,11 @@ router.get('/', (req, res, next) => {
     res.render('login', { admin })
 })
 router.post('/adminlogin', (req, res) => {
-    console.log(req.body);
-    userhelpers.adminLogin(req.body).then((response) => {
-        if (response.status) {
-            res.redirect('admin/view-users',)
+    // console.log(req.body);
+    userhelpers.adminLogin(req.body).then((responses) => {
+        if (responses.status) {
+            // res.send('view users')
+            res.render('admin/view-users',)
         } else {
             res.redirect('/admin')
         }
