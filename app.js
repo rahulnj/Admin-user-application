@@ -29,7 +29,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use(session({ secret: "key", cookie: { maxAge: 600000 } }))
+app.use(session({ secret: "key", cookie: { maxAge: 60000000 } }))
 //database connection
 db.connect((err) => {
   if (err) {

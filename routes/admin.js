@@ -6,7 +6,7 @@ router.get('/', (req, res, next) => {
     let admin = true;
     res.render('login', { admin })
 })
-router.post('/view-users', (req, res) => {
+router.post('/viewusers', (req, res) => {
     // console.log(req.body);
     if (req.session.loggedin) {
         console.log('loggedin');
@@ -15,8 +15,9 @@ router.post('/view-users', (req, res) => {
 
             // console.log(newusers);
             if (response.status) {
-                // req.session.loggedin = true
-                // req.session.admin = response.admin
+
+                req.session.loggedin = true
+                req.session.admin = response.admin
                 res.render('admin/view-users', { button: "Log out", action: "/admin/signout", newusers })
             } else {
 
@@ -33,9 +34,9 @@ router.post('/view-users', (req, res) => {
 
                 // console.log(newusers);
                 if (response.status) {
-                    // req.session.loggedin = true
-                    // req.session.admin = response.admin
-                    res.render('./admin/view-users', { button: "Log out", action: "/admin/signout", newusers })
+                    req.session.loggedin = true
+                    req.session.admin = response.admin
+                    res.render('admin/view-users', { button: "Log out", action: "/admin/signout", newusers })
                 } else {
 
                     res.redirect('/admin')
@@ -51,14 +52,10 @@ router.get('/adduser', (req, res) => {
     res.render('admin/add-users', { nonav: true })
 })
 
-router.get('/viewusers', (req, res) => {
-    res.redirect('/admin/viewusers',)
+// router.get('/viewusers', (req, res) => {
+//     res.redirect('/admin/viewusers',)
 
-})
-
-
-
-
+// })
 
 router.post('/create', (req, res) => {
 
@@ -77,7 +74,7 @@ router.get('/delete-user/:id', (req, res) => {
     let userId = req.params.id
     console.log(userId);
     userhelpers.deleteUser(userId).then((response) => {
-        res.redirect('/admin/view-users')
+        res.redirect('/admin/viewusers')
         // res.send("deleted")
     })
 })
