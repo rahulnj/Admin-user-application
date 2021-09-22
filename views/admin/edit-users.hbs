@@ -13,34 +13,32 @@
 </header>
 <section>
     <div class="text-center">
-        <h3>Create user</h3>
+        <h3>Edit user</h3>
     </div>
 
 
     <div class="container-fluid  p-5 ">
-        <div class="container-fluid">
-            <button class='btn btn-primary btn-primary me-md-2' type='button'><a href="/admin/viewusers"
-                    style="text-decoration: none; color:white">View users</a></button>
-        </div>
+
         <div class="col-lg-6 shadow-sm p-3">
 
-            <form action="/admin/create" method="POST">
+            <form action="/admin/edit-user/{{user._id}}" method="POST">
                 <div class="form-group p-2">
                     <label for="exampleInputEmail1">Username</label>
-                    <input type="text" name="username" class="form-control shadow-sm" placeholder="Username">
+                    <input type="text" name="username" class="form-control shadow-sm" value="{{user.username}}"
+                        placeholder="Username">
                 </div>
                 <div class="form-group p-2">
                     <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" name="mail" class="form-control shadow-sm" id="exampleInputEmail1"
-                        aria-describedby="emailHelp" placeholder="Email">
+                    <input type="email" name="mail" class="form-control shadow-sm" value="{{user.mail}}"
+                        id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
 
                 </div>
                 <div class="form-group p-2">
                     <label for="exampleInputPassword1">Password</label>
-                    <input type="password" name="password" class="form-control shadow-sm" id="exampleInputPassword1"
-                        placeholder="Password">
+                    <input type="password" name="password" class="form-control shadow-sm" value="{{user.password}}"
+                        id="exampleInputPassword1" placeholder="Password">
                 </div>
-                <button type="submit" class="btn btn-primary shadow-sm">Create</button>
+                <button type="submit" class="btn btn-primary shadow-sm">submit</button>
             </form>
 
         </div>

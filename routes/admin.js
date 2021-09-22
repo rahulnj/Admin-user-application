@@ -6,10 +6,13 @@ router.get('/', (req, res, next) => {
     let admin = true;
     res.render('login', { admin })
 })
-router.post('/adminlogin', (req, res) => {
+router.post('/view-users', (req, res) => {
     // console.log(req.body);
-    userhelpers.usersDetails().then((newusers) => {
-        userhelpers.adminLogin(req.body).then((response) => {
+    if (req.session.loggedin) {
+        console.log('loggedin');
+        userhelpers.usersDetails().then((newusers) => {
+            req.session.loggedin = true
+
             // console.log(newusers);
             if (response.status) {
                 // req.session.loggedin = true
@@ -21,7 +24,26 @@ router.post('/adminlogin', (req, res) => {
             }
 
         })
-    })
+    } else {
+
+
+        userhelpers.adminLogin(req.body).then((response) => {
+            userhelpers.usersDetails().then((newusers) => {
+                req.session.loggedin = true
+
+                // console.log(newusers);
+                if (response.status) {
+                    // req.session.loggedin = true
+                    // req.session.admin = response.admin
+                    res.render('./admin/view-users', { button: "Log out", action: "/admin/signout", newusers })
+                } else {
+
+                    res.redirect('/admin')
+                }
+
+            })
+        })
+    }
 
 })
 
@@ -29,8 +51,9 @@ router.get('/adduser', (req, res) => {
     res.render('admin/add-users', { nonav: true })
 })
 
-router.get('/viewuser', (req, res) => {
-    res.redirect('/admin/adminlogin')
+router.get('/viewusers', (req, res) => {
+    res.redirect('/admin/viewusers',)
+
 })
 
 
@@ -54,8 +77,20 @@ router.get('/delete-user/:id', (req, res) => {
     let userId = req.params.id
     console.log(userId);
     userhelpers.deleteUser(userId).then((response) => {
-        res.redirect('/admin/adminlogin')
+        res.redirect('/admin/view-users')
+        // res.send("deleted")
     })
+})
+router.get('/edit-user/:id', async (req, res) => {
+    let user = await userhelpers.editUsers(req.params.id)
+    console.log(user);
+    res.render('admin/edit-users', { nonav: true, user })
+})
+router.post('/edit-user/:id', (req, res) => {
+    userhelpers.updateUser(req.params.id, req.body).then(() => {
+        res.redirect('/admin/viewusers')
+    })
+    // res.send("Editted")
 })
 
 module.exports = router;
