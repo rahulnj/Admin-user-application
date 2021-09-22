@@ -25,7 +25,10 @@
                     <td>{{this.username}}</td>
                     <td>{{this.mail}}</td>
                     <td>{{this.password}}</td>
-                    <td></td>
+                    <td>
+                        <a href="/admin/edit-user" class="btn btn-primary">Edit</a>
+                        <a href="/admin/delete-user/{{this._id}}" class="btn btn-danger">Delete</a>
+                    </td>
                 </tr>
                 {{/each}}
 

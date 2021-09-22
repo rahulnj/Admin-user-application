@@ -12,8 +12,8 @@ router.post('/adminlogin', (req, res) => {
         userhelpers.adminLogin(req.body).then((response) => {
             // console.log(newusers);
             if (response.status) {
-                req.session.loggedin = true
-                req.session.admin = response.admin
+                // req.session.loggedin = true
+                // req.session.admin = response.admin
                 res.render('admin/view-users', { button: "Log out", action: "/admin/signout", newusers })
             } else {
 
@@ -23,13 +23,20 @@ router.post('/adminlogin', (req, res) => {
         })
     })
 
-
-
 })
 
 router.get('/adduser', (req, res) => {
     res.render('admin/add-users', { nonav: true })
 })
+
+router.get('/viewuser', (req, res) => {
+    res.redirect('/admin/adminlogin')
+})
+
+
+
+
+
 router.post('/create', (req, res) => {
 
     userhelpers.docreateUser(req.body).then((response) => {
@@ -42,5 +49,13 @@ router.get('/signout', (req, res) => {
     res.redirect('/admin')
 })
 
+
+router.get('/delete-user/:id', (req, res) => {
+    let userId = req.params.id
+    console.log(userId);
+    userhelpers.deleteUser(userId).then((response) => {
+        res.redirect('/admin/adminlogin')
+    })
+})
 
 module.exports = router;

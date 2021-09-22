@@ -2,7 +2,7 @@ var db = require('../config/connection')
 var collection = require('../config/collections')
 const bcrypt = require('bcrypt')
 const { response } = require('../app')
-
+var objectId = require('mongodb').ObjectId
 module.exports = {
     dosignup: (userData) => {
         return new Promise(async (resolve, reject) => {
@@ -72,6 +72,14 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             let newusers = await db.get().collection(collection.USER_COLLECTION).find().toArray()
             resolve(newusers)
+        })
+    },
+    deleteUser: (userId) => {
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.USER_COLLECTION).remove({ _id: objectId(userId) }).then((response) => {
+                resolve(response)
+
+            })
         })
     }
 
