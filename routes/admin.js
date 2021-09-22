@@ -6,64 +6,42 @@ router.get('/', (req, res, next) => {
     let admin = true;
     res.render('login', { admin })
 })
+
 router.post('/viewusers', (req, res) => {
-    // console.log(req.body);
-    if (req.session.loggedin) {
-        console.log('loggedin');
+
+    userhelpers.adminLogin(req.body).then((response) => {
         userhelpers.usersDetails().then((newusers) => {
             req.session.loggedin = true
 
-            // console.log(newusers);
             if (response.status) {
-
                 req.session.loggedin = true
                 req.session.admin = response.admin
                 res.render('admin/view-users', { button: "Log out", action: "/admin/signout", newusers })
             } else {
-
                 res.redirect('/admin')
             }
-
         })
-    } else {
-
-
-        userhelpers.adminLogin(req.body).then((response) => {
-            userhelpers.usersDetails().then((newusers) => {
-                req.session.loggedin = true
-
-                // console.log(newusers);
-                if (response.status) {
-                    req.session.loggedin = true
-                    req.session.admin = response.admin
-                    res.render('admin/view-users', { button: "Log out", action: "/admin/signout", newusers })
-                } else {
-
-                    res.redirect('/admin')
-                }
-
-            })
-        })
-    }
-
+    })
 })
 
 router.get('/adduser', (req, res) => {
     res.render('admin/add-users', { nonav: true })
 })
 
-// router.get('/viewusers', (req, res) => {
-//     res.redirect('/admin/viewusers',)
-
-// })
+// udayippp
+router.get('/viewusers', (req, res) => {
+    userhelpers.usersDetails().then((newusers) => {
+        res.render('admin/view-users', { button: "Log out", action: "/admin/signout", newusers })
+    })
+})
 
 router.post('/create', (req, res) => {
-
     userhelpers.docreateUser(req.body).then((response) => {
         console.log(response);
     })
     res.redirect('/admin/adduser')
 })
+
 router.get('/signout', (req, res) => {
     req.session.destroy()
     res.redirect('/admin')
@@ -72,8 +50,9 @@ router.get('/signout', (req, res) => {
 
 router.get('/delete-user/:id', (req, res) => {
     let userId = req.params.id
-    console.log(userId);
+    // console.log(userId);
     userhelpers.deleteUser(userId).then((response) => {
+
         res.redirect('/admin/viewusers')
         // res.send("deleted")
     })
