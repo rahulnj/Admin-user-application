@@ -11,19 +11,19 @@ router.get('/', (req, res, next) => {
 });
 
 
-router.post('/viewusers', (req, res) => {
+router.post('/login', (req, res) => {
     userhelpers.adminLogin(req.body).then((response) => {
-        userhelpers.usersDetails().then((newusers) => {
 
 
-            if (response.status) {
-                req.session.loggedin = true
-                req.session.admin = response.admin
-                res.render('admin/view-users', { button: "Log out", action: "/admin/signout", newusers })
-            } else {
-                res.redirect('/admin')
-            }
-        })
+
+        if (response.status) {
+            req.session.loggedin = true
+            req.session.admin = response.admin
+            res.redirect('/admin/viewusers')
+        } else {
+            res.redirect('/admin')
+        }
+
     })
 })
 
@@ -34,9 +34,14 @@ router.get('/adduser', (req, res) => {
 
 
 router.get('/viewusers', (req, res) => {
-    userhelpers.usersDetails().then((newusers) => {
-        res.render('admin/view-users', { button: "Log out", action: "/admin/signout", newusers })
-    })
+    if (req.session.loggedin) {
+        userhelpers.usersDetails().then((newusers) => {
+            res.render('admin/view-users', { button: "Log out", action: "/admin/signout", newusers })
+        })
+    } else {
+        res.redirect('/admin')
+    }
+
 })
 
 router.post('/create', (req, res) => {
@@ -69,8 +74,11 @@ router.post('/edit-user/:id', (req, res) => {
 })
 
 router.get('/signout', (req, res) => {
-    req.session.destroy()
+
+    req.session.loggedin = false;
+
     res.redirect('/admin')
+
 })
 
 module.exports = router;

@@ -59,7 +59,8 @@ router.get('/', function (req, res, next) {
     // console.log(user.username);
 });
 router.get('/logout', (req, res) => {
-    req.session.destroy()
+    req.session.user = null;
+    req.session.loggedIn = false;
     res.redirect('/')
 })
 
