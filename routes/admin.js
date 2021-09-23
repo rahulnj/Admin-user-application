@@ -3,14 +3,18 @@ const { response } = require('../app');
 var router = express.Router();
 const userhelpers = require('../helpers/newuser-helpers')
 router.get('/', (req, res, next) => {
+    if (req.session.loggedin) {
+        res.redirect('/admin/viewusers')
+    } else
+        res.render('login', { admin: true })
 
-    res.render('login', { admin: true })
-})
+});
+
 
 router.post('/viewusers', (req, res) => {
     userhelpers.adminLogin(req.body).then((response) => {
         userhelpers.usersDetails().then((newusers) => {
-            req.session.loggedin = true
+
 
             if (response.status) {
                 req.session.loggedin = true
@@ -25,6 +29,7 @@ router.post('/viewusers', (req, res) => {
 
 router.get('/adduser', (req, res) => {
     res.render('admin/add-users', { nonav: true })
+
 })
 
 
@@ -41,10 +46,7 @@ router.post('/create', (req, res) => {
     res.redirect('/admin/adduser')
 })
 
-router.get('/signout', (req, res) => {
-    req.session.destroy()
-    res.redirect('/admin')
-})
+
 
 
 router.get('/delete-user/:id', (req, res) => {
@@ -64,6 +66,11 @@ router.post('/edit-user/:id', (req, res) => {
     userhelpers.updateUser(req.params.id, req.body).then(() => {
         res.redirect('/admin/viewusers')
     })
+})
+
+router.get('/signout', (req, res) => {
+    req.session.destroy()
+    res.redirect('/admin')
 })
 
 module.exports = router;
