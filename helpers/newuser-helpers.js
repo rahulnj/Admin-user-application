@@ -75,16 +75,16 @@ module.exports = {
         })
     },
     deleteUser: (userId) => {
-        return new Promise((resolve, reject) => {
-            db.get().collection(collection.USER_COLLECTION).remove({ _id: objectId(userId) }).then((response) => {
+        return new Promise(async (resolve, reject) => {
+            await db.get().collection(collection.USER_COLLECTION).remove({ _id: objectId(userId) }).then((response) => {
                 resolve(response)
 
             })
         })
     },
     editUsers: (userId) => {
-        return new Promise((resolve, reject) => {
-            db.get().collection(collection.USER_COLLECTION).findOne({ _id: objectId(userId) }).then((user) => {
+        return new Promise(async (resolve, reject) => {
+            await db.get().collection(collection.USER_COLLECTION).findOne({ _id: objectId(userId) }).then((user) => {
                 resolve(user)
             })
         })
@@ -101,7 +101,18 @@ module.exports = {
                 resolve()
             })
         })
+    },
+    checkUser: async (userId) => {
+        const response = await db.get().collection(collection.USER_COLLECTION).findOne({ username: userId })
+        // console.log(response);
+        return response
+    },
+    checkadminUser: async (userId) => {
+        const response = await db.get().collection(collection.USER_COLLECTION).findOne({ username: userId })
+        // console.log(response);
+        return response
     }
+
 
 
 }

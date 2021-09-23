@@ -28,7 +28,12 @@ router.post('/login', (req, res) => {
 })
 
 router.get('/adduser', (req, res) => {
-    res.render('admin/add-users', { nonav: true })
+    if (req.session.loggedin) {
+        res.render('admin/add-users', { nonav: true })
+    } else {
+        res.redirect('/admin')
+    }
+
 
 })
 
@@ -44,11 +49,17 @@ router.get('/viewusers', (req, res) => {
 
 })
 
-router.post('/create', (req, res) => {
-    userhelpers.docreateUser(req.body).then((response) => {
-        console.log(response);
-    })
-    res.redirect('/admin/adduser')
+router.post('/create', async (req, res) => {
+
+    const response = await userhelpers.checkadminUser(req.body.mail)
+    // console.log(response);
+    if (!response) {
+        userhelpers.docreateUser(req.body).then((response) => {
+        })
+        res.redirect('/admin/adduser')
+    } else
+        // res.send("error")
+        res.redirect('/admin/adduser')
 })
 
 
@@ -63,7 +74,7 @@ router.get('/delete-user/:id', (req, res) => {
 
 router.get('/edit-user/:id', async (req, res) => {
     let user = await userhelpers.editUsers(req.params.id)
-    console.log(user);
+    // console.log(user);
     res.render('admin/edit-users', { nonav: true, user })
 })
 

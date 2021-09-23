@@ -1,4 +1,5 @@
 var express = require('express');
+const { response } = require('../app');
 var router = express.Router();
 const userhelpers = require('../helpers/newuser-helpers')
 
@@ -7,14 +8,22 @@ router.get('/', function (req, res, next) {
   if (req.session.loggedIn) {
     res.redirect('home')
   } else
-    res.render('signup', { button: "Log In", action: "/" })
+
+    res.render('signup', { button: "Log In", action: "/", signuperr: req.session.signupError })
+  req.session.signupError = ""
 });
-router.post('/submit', (req, res) => {
-  userhelpers.dosignup(req.body).then((response) => {
-    // console.log(response);
-  })
-  // res.send('Recieved')
-  res.redirect('/')
+router.post('/submit', async (req, res) => {
+  const response = await userhelpers.checkUser(req.body.username)
+  // console.log(req.body.username)
+  // console.log(response);
+  if (!response) {
+    userhelpers.dosignup(req.body).then((response) => {
+
+    })
+    res.redirect('/')
+  } else
+    req.session.signupError = "Username already taken"
+  res.redirect('/signup')
 })
 
 
