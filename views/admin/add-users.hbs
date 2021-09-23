@@ -43,7 +43,9 @@
                         style="text-decoration: none; color:white">View users</a></button>
 
             </form>
-
+            {{#if createerr}}
+            <div class="error text-danger">{{createerr}}</div>
+            {{/if}}
 
         </div>
 

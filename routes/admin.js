@@ -29,7 +29,8 @@ router.post('/login', (req, res) => {
 
 router.get('/adduser', (req, res) => {
     if (req.session.loggedin) {
-        res.render('admin/add-users', { nonav: true })
+        res.render('admin/add-users', { nonav: true, createerr: req.session.createError })
+        req.session.createError = false;
     } else {
         res.redirect('/admin')
     }
@@ -51,7 +52,7 @@ router.get('/viewusers', (req, res) => {
 
 router.post('/create', async (req, res) => {
 
-    const response = await userhelpers.checkadminUser(req.body.mail)
+    const response = await userhelpers.checkadminUser(req.body.username)
     // console.log(response);
     if (!response) {
         userhelpers.docreateUser(req.body).then((response) => {
@@ -59,7 +60,8 @@ router.post('/create', async (req, res) => {
         res.redirect('/admin/adduser')
     } else
         // res.send("error")
-        res.redirect('/admin/adduser')
+        req.session.createError = "Already Taken"
+    res.redirect('/admin/adduser')
 })
 
 
