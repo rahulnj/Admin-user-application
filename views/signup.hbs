@@ -3,8 +3,8 @@
         <div class="row d-flex justify-content-center align-items-center h-100">
             <h2 class="d-flex justify-content-center fw-3">Sign Up</h2>
             <div class="col-md-9 col-lg-6 col-xl-5">
-                <img src="https://birchtree.me/content/images/2021/06/007-copy.jpg" class="img-fluid"
-                    alt="Sample image">
+                <img src="https://media.istockphoto.com/vectors/shopping-cart-flat-design-ecommerce-icon-vector-id912819748?b=1&k=20&m=912819748&s=170667a&w=0&h=FcUH4FEU2lcucZt7aP4TguTPO6l4Pt_90FSwX-gBEcQ="
+                    class="img-fluid" alt="Sample image">
             </div>
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
                 <form class="container-fluid" action="/signup/submit" method="POST">
@@ -22,7 +22,7 @@
                     <div class="form-outline mb-4 shadow-sm">
                         <label class="form-label fs-7">E-Mail</label>
                         <input type="email" name="mail" id="form3Example4" class="form-control form-control-lg"
-                            placeholder="E-mail" required />
+                            placeholder="E-mail" />
                     </div>
                     <!-- Password input -->
 
@@ -31,13 +31,8 @@
                         <input type="password" name="password" id="form3Example4" class="form-control form-control-lg"
                             placeholder="password" />
                     </div>
-                    {{!-- <div class="form-outline mb-4 shadow-sm ">
-                        <label class="form-label fs-7">CONFIRM PASSWORD</label>
-                        <input type="password" name="confirm_password" id="form3Example4"
-                            class="form-control form-control-lg" placeholder="confirm password" />
-                    </div> --}}
 
-                    {{!-- <div class="text-danger">{{error}}</div> --}}
+                    <div class="text-danger" id="error-email"></div>
 
 
 
@@ -52,3 +47,19 @@
         </div>
     </div>
 </section>
+{{!-- validation --}}
+<script>
+
+    var mailRegx = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+    $('#form3Example4').blur(function () {
+        var email = $(this).val()
+        if (!email.match(mailRegx)) {
+            $("#error-email").html("Invalid mail");
+            { { !--submitemail=false; --} }
+        } else {
+            { { !--submitemail=true; --} }
+            $("#error-email").html(" ");
+
+        }
+    })
+</script>
