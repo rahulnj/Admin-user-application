@@ -6,7 +6,8 @@ router.get('/', (req, res, next) => {
     if (req.session.loggedin) {
         res.redirect('/admin/viewusers')
     } else
-        res.render('login', { admin: true })
+        res.render('login', { admin: true, adminerr: req.session.adminError })
+    req.session.adminError = false
 
 });
 
@@ -21,6 +22,7 @@ router.post('/login', (req, res) => {
             req.session.admin = response.admin
             res.redirect('/admin/viewusers')
         } else {
+            req.session.adminError = "Invalid admin Id"
             res.redirect('/admin')
         }
 

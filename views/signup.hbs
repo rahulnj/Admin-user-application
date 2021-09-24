@@ -7,32 +7,36 @@
                     class="img-fluid" alt="Sample image">
             </div>
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                <form class="container-fluid" action="/signup/submit" method="POST">
+                <form class="container-fluid" id="signupform">
 
 
                     <!-- Username input -->
                     <div class="form-outline mb-4 shadow-sm">
                         <label class="form-label fs-6">USERNAME</label>
-                        <input type="text" id="form3Example3" name="username" class="form-control form-control-lg"
+                        <input type="text" id="usersu" name="username" class="form-control form-control-lg"
                             placeholder="Username" />
 
                     </div>
+                    <div class="text-danger" id="error-name"></div>
 
                     <!-- Email input -->
                     <div class="form-outline mb-4 shadow-sm">
                         <label class="form-label fs-7">E-Mail</label>
-                        <input type="email" name="mail" id="form3Example4" class="form-control form-control-lg"
+                        <input type="email" name="mail" id="mailsu" class="form-control form-control-lg"
                             placeholder="E-mail" />
                     </div>
+                    <div class="text-danger" id="error-email"></div>
+
                     <!-- Password input -->
 
                     <div class="form-outline mb-4 shadow-sm">
                         <label class="form-label fs-7">PASSWORD</label>
-                        <input type="password" name="password" id="form3Example4" class="form-control form-control-lg"
+                        <input type="password" name="password" id="passwordsu" class="form-control form-control-lg"
                             placeholder="password" />
                     </div>
+                    <div class="text-danger" id="error-password"></div>
 
-                    <div class="text-danger" id="error-email"></div>
+
 
 
 
@@ -43,6 +47,7 @@
                     </div>
 
                 </form>
+                <div class="text-danger" id="submit-message"></div>
                 {{#if signuperr}}
                 <div class="error text-danger">{{signuperr}}</div>
                 {{/if}}
@@ -50,19 +55,85 @@
         </div>
     </div>
 </section>
-{{!-- validation --}}
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
 <script>
+    var submitname = false; var submitemail = false; var submitpassword = false;
 
     var mailRegx = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
-    $('#form3Example4').blur(function () {
-        var email = $(this).val()
-        if (!email.match(mailRegx)) {
-            $("#error-email").html("Invalid mail");
-            { { !--submitemail=false; --} }
+    $(document).ready(function () {
+        $("#usersu").on('input', function () {
+            this.value = this.value.replace(/[^ a-zA-Z]/, '');
+            var name = $(this).val()
+            if (name.length < 3 || name.includes('  ') || name.charAt(0) == ' ') {
+                $("#error-name").text("Invalid Name");
+                submitname = false;
+            } else {
+                submitname = true;
+                $("#error-name").text(" ");
+
+            }
+        })
+
+        $('#mailsu').blur(function () {
+            var email = $(this).val()
+            if (!email.match(mailRegx)) {
+                $("#error-email").text("Invalid E-mail");
+                submitemail = false;
+            } else {
+                submitemail = true;
+                $("#error-email").text(" ");
+
+            }
+        })
+        $('#passwordsu').blur(function () {
+            var password = $(this).val()
+            if (password.length < 3 && password.includes('')) {
+                $("#error-password").text("Min 3 input needed");
+                submitpassword = false;
+            } else {
+                submitpassword = true;
+                $("#error-password").text(" ");
+            }
+        })
+
+    })
+    $('#signupform').on("submit", (e) => {
+        e.preventDefault()
+        console.log(submitname)
+        console.log(submitemail)
+        console.log(submitpassword)
+        if (submitname == true && submitemail == true && submitpassword == true) {
+
+            $.ajax({
+                url: "/signup/submit",
+                data: $("#signupform").serialize(),
+                method: "post",
+                success: function (response) {
+                    alert("Form submitted successfully")
+                    location.replace('/signup')
+                },
+                error: function (err) {
+                    alert("Something Error")
+
+                }
+            })
         } else {
-            { { !--submitemail=true; --} }
-            $("#error-email").html(" ");
+
+
+            $("#submit-message").html("Fill the Fields");
+
 
         }
+
     })
+
+
+
+
+
+
+
+
+
 </script>

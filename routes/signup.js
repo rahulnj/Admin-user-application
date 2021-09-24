@@ -13,14 +13,16 @@ router.get('/', function (req, res, next) {
   req.session.signupError = ""
 });
 router.post('/submit', async (req, res) => {
+
   const response = await userhelpers.checkUser(req.body.username)
   // console.log(req.body.username)
   // console.log(response);
   if (!response) {
     userhelpers.dosignup(req.body).then((response) => {
-
+      // res.redirect('/')
     })
-    res.redirect('/')
+
+
   } else
     req.session.signupError = "Username already taken"
   res.redirect('/signup')
