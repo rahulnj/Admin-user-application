@@ -10,7 +10,7 @@ router.get('/', function (req, res, next) {
   } else
 
     res.render('signup', { button: "Log In", action: "/", signuperr: req.session.signupError })
-  req.session.signupError = ""
+  req.session.signupError = false
 });
 router.post('/submit', async (req, res) => {
 
